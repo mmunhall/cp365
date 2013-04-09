@@ -23,7 +23,7 @@ var routes = {
 
 app.get("/", routes.index.drawPage);
 app.get("/seed", routes.posts.seed);
-app.get("/get/:start", routes.posts.get);
+app.get("/get/:date?", routes.posts.get);
 
 app.listen(app.get('url').port);
 console.log('App running on port ' + app.get('url').port + '. Navigate to ' + url.format(app.get('url')) + '.'); 

@@ -29,6 +29,9 @@ exports.seed = function (req, res) {
 exports.get = function (req, res) {
     "use strict";
 
+    var startDate = req.params.date ? new Date(req.params.date) : new Date();
+
+    // TODO: limit by postDate, order by postDate
     Post.find({}, function (error, posts) {
         res.send(posts);
     });

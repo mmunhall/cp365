@@ -11,7 +11,7 @@ var commentSchema = new Schema({
 
 var postSchema = new Schema({
     _id: ObjectId,
-    postDate: {type: Date},
+    postDate: Date,
     title: String,
     body: String,
     image: String, // TODO: Make this a binary image
