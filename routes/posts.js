@@ -12,15 +12,21 @@ exports.seed = function (req, res) {
         }
     });
     new Post({
-        postDate: new Date(),
+        postDate: new Date(2013, 1, 12, 7, 36, 0),
         title: 'First Post',
         body: 'This is the first post of the blog.',
         image: 'tmp'
     }).save();
     new Post({
-        postDate: new Date(),
+        postDate: new Date(2013, 1, 12, 7, 35, 0),
         title: 'Second Post',
         body: 'This is the second post of the blog.',
+        image: 'tmp'
+    }).save();
+    new Post({
+        postDate: new Date(2013, 1, 13, 7, 35, 0),
+        title: 'Third Post',
+        body: 'This is the third post of the blog.',
         image: 'tmp'
     }).save();
     res.send('ok');

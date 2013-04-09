@@ -20,7 +20,7 @@ app.appendPosts = function (data) {
 
         if (thisPostDate.getTime() !== currentPostDate.getTime()) {
             currentPostDate = thisPostDate;
-            out += '<h2>' + currentPostDate + '</h2>';
+            out += '<h2>' + currentPostDate.toLocaleDateString() + '</h2>';
         }
         out += '<div class="postContainer">';
         out += '<h3>' + post.title + '</h3>';
