@@ -1,8 +1,7 @@
+/*global exports:true */
 
-/*
- * GET home page.
- */
+exports.drawPage = function (req, res) {
+    "use strict";
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+    res.render('index', {});
 };
