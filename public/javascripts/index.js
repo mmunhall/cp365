@@ -1,39 +1,44 @@
-/*global $:true _:true */
+/*global $:true, util:true */
 
-var app = {};
+var app = {
+    lastDate: new Date()
+};
+
+app.getMore = function (e) {
+    "use strict";
+
+    if (e) { e.preventDefault(); }
+    $.get('/get/' + app.lastDate.getTime(), {}, app.appendPosts, 'json');
+};
 
 app.appendPosts = function (data) {
     "use strict";
 
-    var currentPostDate = new Date(1973, 1, 12);
-    for (var i in data) {
-        // TODO: Implement a suitable templating system (or learn to use jade in the browser)
+    var i, out = "", post;
 
-        var out = "";
-        var post = data[i];
+    // TODO: Implement a suitable templating system (or learn to use jade in the browser)
+    for (i in data) {
+        post = data[i];
+        app.lastDate = new Date(post.postDate);
 
-        var thisPostDate = new Date(post.postDate);
-        thisPostDate.setHours(0);
-        thisPostDate.setMinutes(0);
-        thisPostDate.setSeconds(0);
-        thisPostDate.setMilliseconds(0);
-
-        if (thisPostDate.getTime() !== currentPostDate.getTime()) {
-            currentPostDate = thisPostDate;
-            out += '<h2>' + currentPostDate.toLocaleDateString() + '</h2>';
+        if (i === '0') {
+            out += '<h2>' + app.lastDate.toLocaleDateString() + '</h2>';
         }
         out += '<div class="postContainer">';
         out += '<h3>' + post.title + '</h3>';
         out += '<img src="#" title="' + post.title + '"><br>';
         out += post.body;
         out += '</div>';
-
-        $('#postsContainer').append(out);
     }
+
+    $('#postsContainer').append(out);
 };
 
 $(function () {
     "use strict";
-    $.get('/get', {}, app.appendPosts, 'json');
+
+    $('#moreLink').on('click', app.getMore);
+
+    app.getMore();
 });
 

@@ -35,10 +35,22 @@ exports.seed = function (req, res) {
 exports.get = function (req, res) {
     "use strict";
 
-    var startDate = req.params.date ? new Date(req.params.date) : new Date();
+    var lastDate = new Date(parseInt(req.params.date, 10)),
+        dateQuery;
 
-    // TODO: limit by postDate, order by postDate
-    Post.find({}, function (error, posts) {
-        res.send(posts);
+    dateQuery = Post.findOne({postDate: {$lt: lastDate}});
+    dateQuery.sort('-postDate');
+    dateQuery.exec(function (error, nextDateObj) {
+        var maxDate, minDate;
+        if (nextDateObj === null) {
+            res.send({});
+        } else {
+            maxDate = new Date(nextDateObj.postDate);
+            minDate = new Date(maxDate);
+            minDate.setHours(0, 0, 0, 0);
+            Post.find({postDate: {$lte: maxDate, $gt: minDate}}, function (error, posts) {
+                res.send(posts);
+            });
+        }
     });
 };
