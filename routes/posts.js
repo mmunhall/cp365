@@ -39,6 +39,7 @@ exports.get = function (req, res) {
         dateQuery;
 
     dateQuery = Post.findOne({postDate: {$lt: lastDate}});
+    dateQuery.limit(1);
     dateQuery.sort('-postDate');
     dateQuery.exec(function (error, nextDateObj) {
         var maxDate, minDate;
