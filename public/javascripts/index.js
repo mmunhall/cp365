@@ -26,7 +26,7 @@ app.appendPosts = function (data) {
         }
         out += '<div class="postContainer">';
         out += '<h3>' + post.title + '</h3>';
-        out += '<img src="#" title="' + post.title + '"><br>';
+        out += '<img src="image/' + post._id + '" title="' + post.title + '"><br>';
         out += post.body;
         out += '</div>';
     }

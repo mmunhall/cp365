@@ -1,3 +1,5 @@
+/*global require:true */
+
 var express = require('express');
 var stylus = require('stylus');
 var mongoose = require('mongoose');
@@ -18,12 +20,14 @@ mongoose.connect('mongodb://localhost/cp365');
 
 var routes = {
     index: require('./routes/index.js'),
-    posts: require('./routes/posts.js')
-}
+    posts: require('./routes/posts.js'),
+    images: require('./routes/images.js')
+};
 
 app.get("/", routes.index.drawPage);
 app.get("/seed", routes.posts.seed);
 app.get("/get/:date?", routes.posts.get);
+app.get("/image/:id", routes.images.get);
 
 app.listen(app.get('url').port);
-console.log('App running on port ' + app.get('url').port + '. Navigate to ' + url.format(app.get('url')) + '.'); 
+console.log('App running on port ' + app.get('url').port + '. Navigate to ' + url.format(app.get('url')) + '.');

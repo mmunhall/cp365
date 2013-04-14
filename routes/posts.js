@@ -1,6 +1,7 @@
 /*global require:true, exports:true */
 
 var Post = require('../models/post.js');
+var fs = require('fs');
 
 // Temporary: Used to create sample data.
 exports.seed = function (req, res) {
@@ -9,27 +10,38 @@ exports.seed = function (req, res) {
     Post.remove({}, function (err) {
         if (err) {
             console.log(err);
+            res.send(err);
+        } else {
+            new Post({
+                postDate: new Date(2013, 1, 12, 7, 36, 0),
+                title: 'First Post',
+                body: 'This is the first post of the blog.',
+                image: {
+                    contentType: 'image/jpeg',
+                    data: fs.readFileSync(__dirname + '/../test/resources/anna.jpg')
+                }
+            }).save();
+            new Post({
+                postDate: new Date(2013, 1, 12, 7, 35, 0),
+                title: 'Second Post',
+                body: 'This is the second post of the blog.',
+                image: {
+                    contentType: 'image/jpeg',
+                    data: fs.readFileSync(__dirname + '/../test/resources/beer.jpg')
+                }
+            }).save();
+            new Post({
+                postDate: new Date(2013, 1, 13, 7, 35, 0),
+                title: 'Third Post',
+                body: 'This is the third post of the blog.',
+                image: {
+                    contentType: 'image/jpeg',
+                    data: fs.readFileSync(__dirname + '/../test/resources/frank.jpg')
+                }
+            }).save();
+            res.send('ok');
         }
     });
-    new Post({
-        postDate: new Date(2013, 1, 12, 7, 36, 0),
-        title: 'First Post',
-        body: 'This is the first post of the blog.',
-        image: 'tmp'
-    }).save();
-    new Post({
-        postDate: new Date(2013, 1, 12, 7, 35, 0),
-        title: 'Second Post',
-        body: 'This is the second post of the blog.',
-        image: 'tmp'
-    }).save();
-    new Post({
-        postDate: new Date(2013, 1, 13, 7, 35, 0),
-        title: 'Third Post',
-        body: 'This is the third post of the blog.',
-        image: 'tmp'
-    }).save();
-    res.send('ok');
 };
 
 exports.get = function (req, res) {
