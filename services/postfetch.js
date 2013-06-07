@@ -15,8 +15,7 @@ find posts after last successful post
     ? delete message upon successful persist?
     ? delete message upon validation failure?
 setTimeout for interval
-
- */
+*/
 
 
 var Post = require('../models/post.js'),
@@ -47,21 +46,26 @@ PostFetch.prototype.start = function () {
 PostFetch.prototype.messageIsValid = function (message) {
     "use strict";
 
-    if (message.attachments && message.attachments.length === 1) {
-        return true;
+    var hasSingleAttachment = message.attachments && message.attachments.length === 1,
+        attachmentIsJpeg = hasSingleAttachment && message.attachments[0].contentType === 'image/jpeg',
+        isValid = true;
+
+    if (hasSingleAttachment && attachmentIsJpeg) {
+        isValid = true;
     } else {
-        console.log('invalid');
-        return false;
+        console.log('invalid message');
+        isValid = false;
     }
+
+    return isValid;
 };
 
 PostFetch.prototype.savePost = function (message) {
     "use strict";
 
-    console.log(message);
-
+    console.log(message.date);
     var post = new Post({
-        postDate: new Date(message.date), // TODO: PARSE THIS CORRECTLY!
+        postDate: new Date(message.date),
         title: message.subject,
         body: message.text,
         image: {
